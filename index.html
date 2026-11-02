@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAZAARÉ — بازاره | بازار تخصصی طلا</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold-50:#fdfaf0;
+    --gold-100:#faf3d9;
+    --gold-200:#f2e4b0;
+    --gold-300:#e8d184;
+    --gold-400:#d9b85a;
+    --gold-500:#c9a227;
+    --gold-600:#a8851b;
+    --gold-700:#806414;
+    --gold-800:#5c4710;
+    --gold-900:#3d2f0a;
+    --ink:#1a1408;
+    --ink-soft:#2c2312;
+    --cream:#fdfaf0;
+    --paper:#fffefb;
+    --line:#ece2c4;
+    --muted:#8a7d5c;
+
+    --radius:18px;
+    --radius-lg:28px;
+    --radius-sm:12px;
+    --shadow-sm:0 2px 10px rgba(128,100,20,.06);
+    --shadow:0 10px 36px rgba(128,100,20,.10);
+    --shadow-lg:0 24px 64px rgba(128,100,20,.16);
+    --glow:0 0 0 4px rgba(201,162,39,.15);
+    --ease:cubic-bezier(.4,0,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Vazirmatn',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.75;
+    font-size:15px;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  img{max-width:100%;display:block}
+  .container{max-width:1360px;margin:0 auto;padding:0 24px}
+  .en{font-family:'Inter',sans-serif}
+  ::selection{background:var(--gold-400);color:var(--ink)}
+
+  /* ---------- Ticker (نرخ لحظه‌ای طلا) ---------- */
+  .ticker{
+    background:linear-gradient(90deg,var(--gold-700),var(--gold-500),var(--gold-700));
+    background-size:200% 100%;
+    animation:shimmer 8s linear infinite;
+    color:var(--ink);
+    font-size:12.5px;
+    padding:9px 16px;
+    overflow:hidden;
+    white-space:nowrap;
+    font-weight:700;
+  }
+  @keyframes shimmer{0%{background-position:0% 0}100%{background-position:200% 0}}
+  .ticker-track{
+    display:inline-flex;
+    gap:36px;
+    animation:tickerScroll 40s linear infinite;
+    padding-left:100%;
+  }
+  @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+  .ticker-item{display:inline-flex;align-items:center;gap:8px}
+  .ticker-item .val{font-family:'Inter',sans-serif;font-weight:800}
+
+  /* ---------- Header ---------- */
+  .header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(253,250,240,.94);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{display:flex;align-items:center;gap:26px;padding:16px 0}
+  .logo{display:flex;align-items:center;gap:12px;flex-shrink:0}
+  .logo-mark{
+    width:44px;height:44px;border-radius:13px;
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    display:grid;place-items:center;
+    box-shadow:0 4px 16px rgba(201,162,39,.35);
+    position:relative;
+  }
+  .logo-mark::after{content:'';position:absolute;inset:2px;border-radius:11px;border:1px solid rgba(255,255,255,.28)}
+  .logo-mark svg{width:22px;height:22px;color:#fff}
+  .logo-text{display:flex;flex-direction:column;line-height:1.05}
+  .logo-text .en{font-size:20px;font-weight:800;letter-spacing:2.5px;color:var(--ink)}
+  .logo-text .en span{color:var(--gold-500)}
+  .logo-text .fa{font-size:11px;color:var(--muted);letter-spacing:1px;font-weight:600}
+
+  .search{flex:1;position:relative}
+  .search-box{
+    display:flex;align-items:center;
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    padding:0 4px 0 18px;
+    transition:.25s var(--ease);
+    height:50px;
+  }
+  .search-box:focus-within{border-color:var(--gold-500);box-shadow:var(--glow)}
+  .search-box svg{width:20px;height:20px;color:var(--muted);flex-shrink:0}
+  .search-box input{flex:1;border:none;outline:none;background:transparent;font-family:inherit;font-size:14px;padding:0 12px;color:var(--ink)}
+  .search-box input::placeholder{color:var(--muted)}
+  .search-btn{
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;border-radius:11px;height:40px;padding:0 24px;
+    font-size:13.5px;font-weight:700;transition:.25s;
+    box-shadow:0 3px 12px rgba(201,162,39,.3);
+  }
+  .search-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(201,162,39,.4)}
+  .search-suggest{
+    position:absolute;top:calc(100% + 8px);right:0;left:0;
+    background:var(--paper);border-radius:14px;
+    box-shadow:var(--shadow-lg);padding:6px;
+    display:none;z-index:50;max-height:340px;overflow-y:auto;
+    border:1px solid var(--line);
+  }
+  .search-suggest.open{display:block;animation:slideDown .2s var(--ease)}
+  @keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+  .suggest-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:9px;cursor:pointer;transition:.15s;font-size:13.5px}
+  .suggest-item:hover{background:var(--gold-50)}
+
+  .actions{display:flex;align-items:center;gap:6px;flex-shrink:0}
+  .icon-btn{position:relative;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;transition:.2s var(--ease);color:var(--ink-soft)}
+  .icon-btn:hover{background:var(--gold-100);color:var(--gold-700)}
+  .icon-btn svg{width:21px;height:21px;stroke-width:1.8}
+  .icon-btn .badge{
+    position:absolute;top:4px;left:4px;
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;font-size:10.5px;font-weight:800;
+    min-width:19px;height:19px;border-radius:10px;
+    display:grid;place-items:center;padding:0 5px;
+    transform:scale(0);transition:.25s var(--ease);
+    box-shadow:0 2px 6px rgba(201,162,39,.4);
+  }
+  .icon-btn .badge.show{transform:scale(1)}
+
+  /* ---------- Cat Nav ---------- */
+  .cat-nav{border-bottom:1px solid var(--line);background:rgba(253,250,240,.6)}
+  .cat-nav-inner{display:flex;align-items:center;gap:2px;padding:0;overflow-x:auto;scrollbar-width:none}
+  .cat-nav-inner::-webkit-scrollbar{display:none}
+  .cat-link{
+    padding:14px 18px;font-size:13.5px;font-weight:500;
+    color:var(--muted);white-space:nowrap;
+    border-bottom:2.5px solid transparent;
+    transition:.2s;display:flex;align-items:center;gap:6px;
+  }
+  .cat-link:hover{color:var(--gold-700)}
+  .cat-link.active{color:var(--gold-700);border-bottom-color:var(--gold-500);font-weight:700}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:32px 0 8px}
+  .hero-grid{display:grid;grid-template-columns:2.1fr 1fr;gap:20px}
+  .hero-card{
+    position:relative;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(233,209,132,.35), transparent 45%),
+      linear-gradient(135deg,var(--gold-100) 0%,var(--gold-200) 40%,var(--gold-300) 100%);
+    border-radius:var(--radius-lg);
+    padding:56px 48px;color:var(--ink);
+    overflow:hidden;min-height:390px;
+    display:flex;align-items:center;
+    border:1px solid var(--gold-300);
+  }
+  .hero-card::before{
+    content:'';position:absolute;top:-120px;left:-120px;
+    width:460px;height:460px;
+    background:radial-gradient(circle,rgba(255,255,255,.55),transparent 70%);
+    border-radius:50%;
+  }
+  .hero-card::after{
+    content:'';position:absolute;bottom:-80px;right:-80px;
+    width:340px;height:340px;
+    background:radial-gradient(circle,rgba(201,162,39,.35),transparent 70%);
+    border-radius:50%;
+  }
+  .hero-content{position:relative;z-index:2;max-width:560px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:2px;
+    color:var(--gold-800);
+    background:rgba(255,255,255,.55);
+    border:1px solid rgba(201,162,39,.4);
+    padding:6px 16px;border-radius:100px;margin-bottom:22px;
+    backdrop-filter:blur(8px);
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--gold-600);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+  .hero-content h1{
+    font-size:clamp(28px,3.4vw,46px);
+    font-weight:900;line-height:1.22;
+    margin-bottom:16px;letter-spacing:-.6px;
+    color:var(--ink);
+  }
+  .hero-content h1 .gold{
+    background:linear-gradient(135deg,var(--gold-600),var(--gold-800));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero-content p{font-size:15.5px;color:var(--ink-soft);opacity:.78;margin-bottom:32px;line-height:1.8}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+  .btn-primary{
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;padding:14px 30px;border-radius:12px;
+    font-weight:700;font-size:14px;transition:.25s var(--ease);
+    display:inline-flex;align-items:center;gap:8px;
+    box-shadow:0 6px 20px rgba(201,162,39,.35);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(201,162,39,.45)}
+  .btn-ghost{
+    background:rgba(255,255,255,.7);color:var(--gold-800);
+    padding:14px 26px;border-radius:12px;font-weight:700;font-size:14px;
+    border:1px solid rgba(201,162,39,.4);transition:.25s;
+    backdrop-filter:blur(8px);
+  }
+  .btn-ghost:hover{background:#fff}
+  .hero-visual{
+    position:absolute;left:40px;bottom:-20px;
+    font-size:200px;opacity:.18;line-height:1;pointer-events:none;
+    transform:rotate(-8deg);
+    filter:drop-shadow(0 8px 24px rgba(201,162,39,.4));
+  }
+
+  .hero-side{display:flex;flex-direction:column;gap:20px}
+  .side-card{
+    border-radius:var(--radius-lg);padding:26px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;overflow:hidden;transition:.3s var(--ease);
+    cursor:pointer;min-height:184px;
+  }
+  .side-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+  .side-card.dark{background:linear-gradient(135deg,var(--ink),var(--gold-900));color:var(--gold-200);border:1px solid var(--gold-800)}
+  .side-card.light{background:linear-gradient(135deg,var(--paper),var(--gold-100));color:var(--ink);border:1px solid var(--gold-200)}
+  .side-card h3{font-size:18px;font-weight:800;margin-bottom:6px;line-height:1.4}
+  .side-card p{font-size:12.5px;opacity:.75}
+  .side-card .emoji{position:absolute;left:-10px;bottom:-24px;font-size:92px;opacity:.3;transform:rotate(-8deg)}
+  .side-card .arrow{position:relative;z-index:2;margin-top:20px;font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+  .side-card .arrow svg{width:14px;height:14px;transition:.2s}
+  .side-card:hover .arrow svg{transform:translateX(-4px)}
+
+  /* ---------- Trust ---------- */
+  .trust{margin:28px 0 8px}
+  .trust-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    background:var(--paper);border:1px solid var(--line);
+    border-radius:var(--radius);padding:20px 8px;
+  }
+  .trust-item{display:flex;align-items:center;gap:12px;padding:0 22px;border-left:1px solid var(--line)}
+  .trust-item:last-child{border-left:none}
+  .trust-item .t-icon{
+    width:44px;height:44px;border-radius:12px;
+    background:var(--gold-100);
+    display:grid;place-items:center;font-size:20px;flex-shrink:0;
+    border:1px solid var(--gold-200);
+  }
+  .trust-item .t-title{font-size:13.5px;font-weight:800;color:var(--ink)}
+  .trust-item .t-sub{font-size:11.5px;color:var(--muted)}
+
+  /* ---------- Section ---------- */
+  .section{padding:48px 0}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:26px;gap:16px;flex-wrap:wrap}
+  .sec-title{
+    font-size:24px;font-weight:900;color:var(--ink);
+    display:flex;align-items:center;gap:12px;letter-spacing:-.3px;
+  }
+  .sec-title::before{
+    content:'';width:5px;height:28px;
+    background:linear-gradient(180deg,var(--gold-400),var(--gold-700));
+    border-radius:3px;
+  }
+  .sec-sub{font-size:13px;color:var(--muted);margin-top:4px;padding-right:17px}
+  .sec-link{
+    font-size:13px;font-weight:700;color:var(--gold-700);
+    display:flex;align-items:center;gap:5px;
+    padding:9px 16px;border-radius:9px;transition:.2s;
+  }
+  .sec-link:hover{background:var(--gold-100)}
+  .sec-link svg{width:15px;height:15px}
+
+  /* ---------- Category Cards ---------- */
+  .cat-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:14px}
+  .cat-card{
+    background:var(--paper);border:1px solid var(--line);
+    border-radius:var(--radius);padding:22px 10px;
+    text-align:center;transition:.3s var(--ease);cursor:pointer;
+  }
+  .cat-card:hover{
+    transform:translateY(-5px);box-shadow:var(--shadow);
+    border-color:var(--gold-400);
+  }
+  .cat-card .c-emoji{
+    width:58px;height:58px;margin:0 auto 12px;
+    border-radius:16px;display:grid;place-items:center;font-size:26px;
+    background:var(--gold-100);transition:.35s;
+    border:1px solid var(--gold-200);
+  }
+  .cat-card:hover .c-emoji{
+    background:linear-gradient(135deg,var(--gold-400),var(--gold-600));
+    transform:scale(1.08) rotate(-4deg);
+    box-shadow:0 6px 16px rgba(201,162,39,.35);
+  }
+  .cat-card .c-name{font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.4}
+
+  /* ---------- Deals Banner ---------- */
+  .deals-banner{
+    background:linear-gradient(135deg,var(--gold-700),var(--gold-500) 60%,var(--gold-400));
+    border-radius:var(--radius-lg);padding:24px 32px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:20px;flex-wrap:wrap;margin-bottom:26px;
+    color:var(--ink);position:relative;overflow:hidden;
+    box-shadow:0 12px 32px rgba(201,162,39,.28);
+    border:1px solid var(--gold-600);
+  }
+  .deals-banner::before{
+    content:'';position:absolute;top:-50%;right:20%;
+    width:340px;height:340px;
+    background:radial-gradient(circle,rgba(255,255,255,.35),transparent 70%);
+    border-radius:50%;
+  }
+  .deals-banner h2{font-size:20px;font-weight:900;position:relative;z-index:2;display:flex;align-items:center;gap:8px}
+  .deals-banner p{font-size:12.5px;opacity:.85;margin-top:2px;position:relative;z-index:2}
+  .countdown{display:flex;align-items:center;gap:8px;position:relative;z-index:2;direction:ltr}
+  .countdown .cd{
+    background:rgba(26,20,8,.85);color:var(--gold-200);
+    border-radius:11px;padding:8px 14px;min-width:58px;
+    text-align:center;font-family:'Inter',sans-serif;
+    font-weight:800;font-size:18px;letter-spacing:1px;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+  }
+  .countdown .cd small{
+    display:block;font-size:9.5px;font-weight:500;
+    color:var(--gold-300);letter-spacing:0;margin-top:2px;
+    font-family:'Vazirmatn',sans-serif;
+  }
+  .countdown .sep{color:var(--ink);font-weight:800;font-size:20px;opacity:.7}
+
+  /* ---------- Products ---------- */
+  .prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .prod-card{
+    background:var(--paper);border:1px solid var(--line);
+    border-radius:var(--radius);overflow:hidden;
+    transition:.3s var(--ease);cursor:pointer;
+    display:flex;flex-direction:column;position:relative;
+  }
+  .prod-card:hover{
+    transform:translateY(-5px);box-shadow:var(--shadow);
+    border-color:var(--gold-300);
+  }
+  .prod-img{
+    position:relative;aspect-ratio:1;
+    display:grid;place-items:center;font-size:82px;
+    transition:.4s var(--ease);overflow:hidden;
+    background:linear-gradient(135deg,var(--gold-50),var(--gold-100));
+  }
+  .prod-card:hover .prod-img{transform:scale(1.05)}
+  .prod-badge{
+    position:absolute;top:12px;right:12px;
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;font-size:11px;font-weight:800;
+    padding:5px 11px;border-radius:8px;z-index:2;
+    box-shadow:0 3px 10px rgba(201,162,39,.35);
+  }
+  .prod-badge.new{background:linear-gradient(135deg,var(--ink),var(--gold-900))}
+  .fav-btn{
+    position:absolute;top:10px;left:10px;
+    width:36px;height:36px;border-radius:50%;
+    background:rgba(255,255,255,.96);
+    display:grid;place-items:center;z-index:2;
+    transition:.2s;box-shadow:var(--shadow-sm);
+  }
+  .fav-btn:hover{transform:scale(1.12)}
+  .fav-btn svg{width:16px;height:16px;stroke:var(--muted);fill:none;transition:.2s}
+  .fav-btn.active svg{fill:var(--gold-600);stroke:var(--gold-600)}
+  .prod-info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .prod-brand{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.4px}
+  .prod-name{
+    font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.5;
+    min-height:42px;display:-webkit-box;
+    -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .prod-rating{display:flex;align-items:center;gap:4px;font-size:11.5px;color:var(--muted);margin-top:2px}
+  .prod-rating svg{width:13px;height:13px;fill:var(--gold-500);stroke:var(--gold-500)}
+  .prod-rating .count{color:var(--muted);opacity:.7}
+  .prod-price-row{display:flex;align-items:baseline;gap:8px;margin-top:6px;flex-wrap:wrap}
+  .prod-price{font-size:15.5px;font-weight:900;color:var(--gold-800)}
+  .prod-price small{font-size:10.5px;font-weight:500;color:var(--muted);margin-right:2px}
+  .prod-old{font-size:11.5px;color:var(--muted);text-decoration:line-through;opacity:.7}
+  .add-btn{
+    margin-top:10px;width:100%;padding:10px;border-radius:10px;
+    background:var(--gold-100);color:var(--gold-800);
+    font-weight:700;font-size:12.5px;transition:.25s;
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    border:1px solid var(--gold-200);
+  }
+  .add-btn:hover{
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;border-color:transparent;
+    box-shadow:0 4px 14px rgba(201,162,39,.35);
+  }
+  .add-btn svg{width:15px;height:15px;stroke-width:2}
+
+  /* ---------- AI Banner ---------- */
+  .ai-banner{
+    margin:8px 0;padding:38px 42px;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(233,209,132,.25), transparent 50%),
+      linear-gradient(135deg,var(--ink) 0%,var(--gold-900) 60%,var(--ink) 100%);
+    border-radius:var(--radius-lg);color:var(--gold-100);
+    display:flex;align-items:center;justify-content:space-between;
+    gap:32px;flex-wrap:wrap;position:relative;overflow:hidden;
+    border:1px solid var(--gold-800);
+  }
+  .ai-banner::before{
+    content:'';position:absolute;top:-80px;left:-80px;
+    width:360px;height:360px;
+    background:radial-gradient(circle,rgba(201,162,39,.28),transparent 70%);
+    border-radius:50%;
+  }
+  .ai-content{position:relative;z-index:2;max-width:560px}
+  .ai-content .ai-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11.5px;font-weight:700;letter-spacing:2px;
+    color:var(--gold-300);
+    background:rgba(201,162,39,.14);
+    border:1px solid rgba(201,162,39,.35);
+    padding:6px 14px;border-radius:100px;margin-bottom:16px;
+  }
+  .ai-content h2{font-size:26px;font-weight:900;color:#fff;line-height:1.35;margin-bottom:10px;letter-spacing:-.3px}
+  .ai-content h2 .gold{color:var(--gold-400)}
+  .ai-content p{font-size:14px;color:rgba(250,243,217,.75);margin-bottom:24px;line-height:1.8}
+  .ai-cta{
+    background:linear-gradient(135deg,var(--gold-400),var(--gold-600));
+    color:var(--ink);padding:14px 28px;border-radius:12px;
+    font-weight:800;font-size:14px;transition:.25s var(--ease);
+    display:inline-flex;align-items:center;gap:8px;
+    box-shadow:0 6px 22px rgba(201,162,39,.35);
+  }
+  .ai-cta:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,162,39,.5)}
+  .ai-visual{
+    position:relative;z-index:2;display:flex;flex-direction:column;gap:10px;
+    min-width:280px;
+  }
+  .ai-bubble{
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(201,162,39,.25);
+    border-radius:14px;padding:14px 18px;
+    font-size:13px;color:var(--gold-100);
+    backdrop-filter:blur(8px);line-height:1.7;
+  }
+  .ai-bubble.user{
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;align-self:flex-end;max-width:85%;
+    border:none;box-shadow:0 4px 16px rgba(201,162,39,.35);
+  }
+  .ai-bubble .resp-tag{
+    display:inline-block;font-size:10px;font-weight:700;
+    color:var(--gold-400);margin-bottom:4px;letter-spacing:1px;
+  }
+
+  /* ---------- Footer ---------- */
+  .footer{
+    background:linear-gradient(180deg,var(--cream),var(--gold-50));
+    border-top:1px solid var(--line);
+    margin-top:60px;padding:60px 0 30px;
+  }
+  .foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1.4fr;gap:40px;margin-bottom:44px}
+  .foot-col h4{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:16px}
+  .foot-col a{display:block;font-size:13px;color:var(--muted);padding:6px 0;transition:.2s}
+  .foot-col a:hover{color:var(--gold-700);padding-right:6px}
+  .foot-about p{font-size:13px;color:var(--muted);line-height:1.9;margin-top:16px;max-width:340px}
+  .foot-logo{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .newsletter{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px}
+  .newsletter h4{margin-bottom:10px}
+  .newsletter p{font-size:12px;color:var(--muted);margin-bottom:14px}
+  .news-input{display:flex;gap:8px}
+  .news-input input{
+    flex:1;border:1.5px solid var(--line);border-radius:10px;
+    padding:11px 14px;font-family:inherit;font-size:13px;
+    outline:none;transition:.2s;background:var(--cream);
+  }
+  .news-input input:focus{border-color:var(--gold-500);box-shadow:var(--glow)}
+  .news-input button{
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;border-radius:10px;padding:0 20px;
+    font-weight:700;font-size:13px;transition:.2s;
+  }
+  .news-input button:hover{transform:translateY(-1px)}
+  .foot-bottom{
+    border-top:1px solid var(--line);padding-top:24px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);
+  }
+  .socials{display:flex;gap:8px}
+  .socials a{
+    width:38px;height:38px;border-radius:10px;
+    background:var(--paper);border:1px solid var(--line);
+    display:grid;place-items:center;font-size:16px;
+    transition:.2s;
+  }
+  .socials a:hover{background:var(--gold-500);border-color:transparent;transform:translateY(-2px)}
+
+  /* ---------- Cart Drawer ---------- */
+  .drawer-overlay{
+    position:fixed;inset:0;background:rgba(26,20,8,.5);
+    backdrop-filter:blur(4px);z-index:200;opacity:0;pointer-events:none;
+    transition:.3s;
+  }
+  .drawer-overlay.open{opacity:1;pointer-events:auto}
+  .drawer{
+    position:fixed;top:0;left:0;bottom:0;width:420px;max-width:100vw;
+    background:var(--paper);z-index:201;
+    transform:translateX(-100%);transition:.35s var(--ease);
+    display:flex;flex-direction:column;
+    box-shadow:var(--shadow-lg);
+  }
+  .drawer.open{transform:translateX(0)}
+  .drawer-head{
+    padding:22px 24px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .drawer-head h3{font-size:17px;font-weight:900;color:var(--ink);display:flex;align-items:center;gap:8px}
+  .drawer-close{
+    width:36px;height:36px;border-radius:10px;
+    display:grid;place-items:center;
+    background:var(--gold-100);color:var(--gold-700);transition:.2s;
+    font-size:20px;font-weight:700;
+  }
+  .drawer-close:hover{background:var(--gold-500);color:#fff}
+  .drawer-body{flex:1;overflow-y:auto;padding:16px 24px}
+  .empty-cart{text-align:center;padding:60px 20px;color:var(--muted)}
+  .empty-cart .ico{font-size:56px;margin-bottom:14px;opacity:.5}
+  .empty-cart h4{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px}
+  .empty-cart p{font-size:13px}
+  .cart-item{
+    display:flex;gap:14px;padding:14px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .cart-item:last-child{border-bottom:none}
+  .cart-thumb{
+    width:64px;height:64px;border-radius:12px;
+    background:var(--gold-100);display:grid;place-items:center;
+    font-size:28px;flex-shrink:0;border:1px solid var(--gold-200);
+  }
+  .cart-meta{flex:1;min-width:0}
+  .cart-meta .cname{font-size:13px;font-weight:700;color:var(--ink);line-height:1.5;margin-bottom:4px}
+  .cart-meta .cprice{font-size:12.5px;font-weight:700;color:var(--gold-800)}
+  .qty-ctrl{
+    display:inline-flex;align-items:center;gap:0;margin-top:8px;
+    border:1px solid var(--line);border-radius:8px;overflow:hidden;
+  }
+  .qty-ctrl button{
+    width:28px;height:28px;display:grid;place-items:center;
+    font-size:15px;font-weight:700;color:var(--gold-700);
+    transition:.15s;
+  }
+  .qty-ctrl button:hover{background:var(--gold-100)}
+  .qty-ctrl span{min-width:32px;text-align:center;font-size:12.5px;font-weight:700;padding:0 4px}
+  .cart-remove{
+    align-self:flex-start;color:var(--muted);
+    font-size:18px;transition:.2s;padding:4px;
+  }
+  .cart-remove:hover{color:#c0392b}
+  .drawer-foot{
+    padding:20px 24px;border-top:1px solid var(--line);
+    background:var(--cream);
+  }
+  .total-row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:16px;
+  }
+  .total-row .lbl{font-size:13px;color:var(--muted);font-weight:600}
+  .total-row .val{font-size:20px;font-weight:900;color:var(--gold-800)}
+  .total-row .val small{font-size:11px;font-weight:500;color:var(--muted)}
+  .checkout-btn{
+    width:100%;padding:15px;border-radius:12px;
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;font-weight:800;font-size:14.5px;
+    transition:.25s;box-shadow:0 6px 20px rgba(201,162,39,.35);
+  }
+  .checkout-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(201,162,39,.5)}
+
+  /* ---------- Product Modal ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(26,20,8,.55);
+    backdrop-filter:blur(6px);z-index:300;
+    display:none;align-items:center;justify-content:center;
+    padding:20px;overflow-y:auto;
+  }
+  .modal-overlay.open{display:flex;animation:fadeIn .25s}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .modal{
+    background:var(--paper);border-radius:var(--radius-lg);
+    max-width:920px;width:100%;overflow:hidden;
+    display:grid;grid-template-columns:1fr 1fr;
+    box-shadow:var(--shadow-lg);
+    animation:modalIn .35s var(--ease);
+    position:relative;
+    border:1px solid var(--line);
+  }
+  @keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  .modal-img{
+    background:linear-gradient(135deg,var(--gold-50),var(--gold-200));
+    display:grid;place-items:center;font-size:180px;
+    min-height:420px;position:relative;
+  }
+  .modal-img .tag{
+    position:absolute;top:16px;right:16px;
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;font-size:12px;font-weight:800;
+    padding:6px 14px;border-radius:9px;
+  }
+  .modal-close{
+    position:absolute;top:14px;left:14px;
+    width:38px;height:38px;border-radius:11px;
+    background:rgba(255,255,255,.95);
+    display:grid;place-items:center;z-index:5;
+    font-size:20px;font-weight:700;color:var(--ink);
+    transition:.2s;box-shadow:var(--shadow-sm);
+  }
+  .modal-close:hover{background:var(--gold-500);color:#fff}
+  .modal-body{padding:32px 30px;display:flex;flex-direction:column}
+  .modal-body .m-brand{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.6px;margin-bottom:8px}
+  .modal-body h2{font-size:22px;font-weight:900;color:var(--ink);line-height:1.4;margin-bottom:14px}
+  .modal-rating{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-bottom:20px}
+  .modal-rating svg{width:15px;height:15px;fill:var(--gold-500);stroke:var(--gold-500)}
+  .modal-desc{font-size:13.5px;color:var(--ink-soft);opacity:.85;line-height:1.9;margin-bottom:22px}
+  .modal-price-box{
+    background:var(--gold-50);border:1px solid var(--gold-200);
+    border-radius:14px;padding:18px;margin-bottom:20px;
+  }
+  .modal-price{font-size:26px;font-weight:900;color:var(--gold-800);display:flex;align-items:baseline;gap:6px}
+  .modal-price small{font-size:12px;font-weight:500;color:var(--muted)}
+  .modal-price .old{font-size:14px;color:var(--muted);text-decoration:line-through;margin-right:10px;font-weight:500}
+  .modal-stock{font-size:12px;color:#2e7d32;font-weight:700;margin-top:8px;display:flex;align-items:center;gap:6px}
+  .modal-stock .dot{width:7px;height:7px;border-radius:50%;background:#2e7d32;animation:pulse 2s infinite}
+  .modal-actions{display:flex;gap:10px;margin-top:auto}
+  .m-btn-primary{
+    flex:1;padding:14px;border-radius:12px;
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;font-weight:800;font-size:14px;transition:.25s;
+    box-shadow:0 5px 18px rgba(201,162,39,.35);
+  }
+  .m-btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,162,39,.5)}
+  .m-btn-ghost{
+    width:52px;border-radius:12px;
+    background:var(--gold-100);color:var(--gold-700);
+    display:grid;place-items:center;transition:.2s;
+    border:1px solid var(--gold-200);
+  }
+  .m-btn-ghost:hover{background:var(--gold-500);color:#fff}
+  .m-btn-ghost svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+
+  /* ---------- Chat Widget ---------- */
+  .chat-fab{
+    position:fixed;bottom:24px;left:24px;z-index:150;
+    width:60px;height:60px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;font-size:26px;display:grid;place-items:center;
+    box-shadow:0 8px 28px rgba(201,162,39,.45);
+    transition:.25s;cursor:pointer;
+  }
+  .chat-fab:hover{transform:scale(1.08) rotate(-6deg)}
+  .chat-fab .ring{
+    position:absolute;inset:-6px;border-radius:50%;
+    border:2px solid var(--gold-400);opacity:0;
+    animation:ringPulse 2.5s infinite;
+  }
+  @keyframes ringPulse{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(1.3)}}
+
+  .chat-panel{
+    position:fixed;bottom:24px;left:24px;z-index:151;
+    width:380px;max-width:calc(100vw - 32px);
+    background:var(--paper);border-radius:20px;
+    box-shadow:var(--shadow-lg);
+    display:flex;flex-direction:column;
+    height:520px;max-height:calc(100vh - 48px);
+    transform:translateY(20px) scale(.95);opacity:0;pointer-events:none;
+    transition:.3s var(--ease);overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .chat-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:auto}
+  .chat-head{
+    background:linear-gradient(135deg,var(--ink),var(--gold-900));
+    color:var(--gold-100);padding:18px 20px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .chat-avatar{
+    width:42px;height:42px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-400),var(--gold-600));
+    display:grid;place-items:center;font-size:20px;flex-shrink:0;
+    box-shadow:0 3px 12px rgba(201,162,39,.4);
+  }
+  .chat-head .info{flex:1}
+  .chat-head h4{font-size:14px;font-weight:800;color:#fff}
+  .chat-head p{font-size:11.5px;color:var(--gold-300);display:flex;align-items:center;gap:5px}
+  .chat-head p .dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite}
+  .chat-close{
+    width:32px;height:32px;border-radius:9px;
+    background:rgba(255,255,255,.1);color:var(--gold-200);
+    display:grid;place-items:center;font-size:18px;
+  }
+  .chat-close:hover{background:rgba(255,255,255,.2)}
+  .chat-body{
+    flex:1;overflow-y:auto;padding:18px;
+    display:flex;flex-direction:column;gap:12px;
+    background:var(--cream);
+  }
+  .msg{
+    max-width:85%;padding:11px 15px;border-radius:14px;
+    font-size:13px;line-height:1.7;
+    animation:msgIn .3s var(--ease);
+  }
+  @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .msg.bot{
+    background:var(--paper);color:var(--ink);
+    align-self:flex-start;border-bottom-right-radius:4px;
+    border:1px solid var(--line);
+  }
+  .msg.user{
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;align-self:flex-end;border-bottom-left-radius:4px;
+    box-shadow:0 3px 12px rgba(201,162,39,.3);
+  }
+  .msg.typing{display:flex;gap:4px;padding:14px 16px}
+  .msg.typing span{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--gold-500);
+    animation:typing 1.2s infinite;
+  }
+  .msg.typing span:nth-child(2){animation-delay:.2s}
+  .msg.typing span:nth-child(3){animation-delay:.4s}
+  @keyframes typing{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+  .chat-chips{
+    display:flex;flex-wrap:wrap;gap:6px;
+    padding:0 18px 10px;background:var(--cream);
+  }
+  .chip{
+    background:var(--paper);border:1px solid var(--gold-300);
+    color:var(--gold-800);font-size:11.5px;font-weight:600;
+    padding:7px 13px;border-radius:100px;transition:.2s;
+  }
+  .chip:hover{background:var(--gold-500);color:#fff;border-color:transparent}
+  .chat-input-wrap{
+    padding:14px 16px;background:var(--paper);
+    border-top:1px solid var(--line);display:flex;gap:8px;
+  }
+  .chat-input-wrap input{
+    flex:1;border:1.5px solid var(--line);border-radius:11px;
+    padding:11px 14px;font-family:inherit;font-size:13px;
+    outline:none;transition:.2s;background:var(--cream);
+  }
+  .chat-input-wrap input:focus{border-color:var(--gold-500);box-shadow:var(--glow)}
+  .chat-send{
+    width:44px;height:44px;border-radius:11px;
+    background:linear-gradient(135deg,var(--gold-500),var(--gold-700));
+    color:#fff;display:grid;place-items:center;transition:.2s;flex-shrink:0;
+    box-shadow:0 3px 12px rgba(201,162,39,.3);
+  }
+  .chat-send:hover{transform:scale(1.05)}
+  .chat-send svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2}
+
+  /* ---------- Toast ---------- */
+  .toast{
+    position:fixed;bottom:100px;right:24px;z-index:400;
+    background:var(--ink);color:var(--gold-100);
+    padding:14px 22px;border-radius:12px;
+    font-size:13px;font-weight:600;
+    box-shadow:var(--shadow-lg);
+    transform:translateX(140%);transition:.35s var(--ease);
+    display:flex;align-items:center;gap:10px;
+    border:1px solid var(--gold-700);
+  }
+  .toast.show{transform:translateX(0)}
+  .toast .ico{font-size:18px}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:1100px){
+    .cat-grid{grid-template-columns:repeat(4,1fr)}
+    .prod-grid{grid-template-columns:repeat(3,1fr)}
+    .foot-top{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:820px){
+    .hero-grid{grid-template-columns:1fr}
+    .hero-side{flex-direction:row}
+    .side-card{flex:1;min-height:150px}
+    .hero-card{padding:40px 28px;min-height:auto}
+    .hero-visual{font-size:140px;left:-20px;bottom:-30px}
+    .trust-grid{grid-template-columns:1fr 1fr;gap:14px;padding:16px}
+    .trust-item{border-left:none;padding:8px 12px}
+    .cat-grid{grid-template-columns:repeat(3,1fr)}
+    .prod-grid{grid-template-columns:repeat(2,1fr)}
+    .modal{grid-template-columns:1fr}
+    .modal-img{min-height:240px;font-size:120px}
+    .foot-top{grid-template-columns:1fr;gap:28px}
+    .header-inner{flex-wrap:wrap;gap:12px}
+    .search{order:3;flex-basis:100%}
+    .actions{margin-right:auto}
+    .ai-banner{padding:28px}
+    .ai-visual{width:100%;min-width:0}
+  }
+  @media(max-width:520px){
+    .container{padding:0 16px}
+    .cat-grid{grid-template-columns:repeat(2,1fr)}
+    .prod-grid{grid-template-columns:1fr 1fr;gap:10px}
+    .prod-info{padding:11px 12px 13px}
+    .prod-name{font-size:12.5px}
+    .prod-price{font-size:14px}
+    .add-btn{font-size:11.5px;padding:8px}
+    .hero-side{flex-direction:column}
+    .deals-banner{padding:20px}
+    .countdown .cd{min-width:48px;font-size:15px;padding:6px 10px}
+    .trust-grid{grid-template-columns:1fr}
+    .sec-title{font-size:20px}
+    .hero-content h1{font-size:26px}
+    .drawer{width:100vw}
+    .chat-panel{width:calc(100vw - 24px);left:12px;bottom:12px;height:calc(100vh - 100px)}
+    .chat-fab{width:54px;height:54px;font-size:24px;bottom:16px;left:16px}
+    .toast{right:16px;left:16px;bottom:88px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Ticker: نرخ لحظه‌ای طلا -->
+<div class="ticker" aria-label="نرخ لحظه‌ای طلا">
+  <div class="ticker-track">
+    <span class="ticker-item">🥇 سکه تمام بهار آزادی <span class="val">۴۸,۲۰۰,۰۰۰</span> تومان</span>
+    <span class="ticker-item">🥇 نیم سکه بهار <span class="val">۲۶,۵۰۰,۰۰۰</span> تومان</span>
+    <span class="ticker-item">🥇 ربع سکه بهار <span class="val">۱۶,۸۰۰,۰۰۰</span> تومان</span>
+    <span class="ticker-item">🥇 شمش طلا ۱ گرم <span class="val">۴,۸۵۰,۰۰۰</span> تومان</span>
+    <span class="ticker-item">🥇 مثقال طلا ۱۷ عیار <span class="val">۲۰,۹۰۰,۰۰۰</span> تومان</span>
+    <span class="ticker-item">🥇 گرم طلای ۱۸ عیار <span class="val">۴,۸۲۰,۰۰۰</span> تومان</span>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="en">BAZAAR<span>É</span></span>
+        <span class="fa">بازاره · بازار طلا</span>
+      </div>
+    </a>
+
+    <div class="search">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="جست‌وجو در محصولات طلا..." autocomplete="off">
+        <button class="search-btn">جست‌وجو</button>
+      </div>
+      <div class="search-suggest" id="suggestBox"></div>
+    </div>
+
+    <div class="actions">
+      <button class="icon-btn" title="حساب کاربری">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+      <button class="icon-btn" id="favBtn" title="علاقه‌مندی‌ها">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+        </svg>
+        <span class="badge" id="favBadge">0</span>
+      </button>
+      <button class="icon-btn" id="cartBtn" title="سبد خرید">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+        </svg>
+        <span class="badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="cat-nav">
+    <div class="container cat-nav-inner">
+      <a class="cat-link active" href="#">همه طلا</a>
+      <a class="cat-link" href="#">سکه</a>
+      <a class="cat-link" href="#">شمش</a>
+      <a class="cat-link" href="#">گردنبند</a>
+      <a class="cat-link" href="#">دستبند</a>
+      <a class="cat-link" href="#">انگشتر</a>
+      <a class="cat-link" href="#">گوشواره</a>
+      <a class="cat-link" href="#">نیم‌ست و ست</a>
+      <a class="cat-link" href="#">آویز</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero container">
+    <div class="hero-grid">
+      <div class="hero-card">
+        <div class="hero-content">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            <span>بازار تخصصی طلا در ایران</span>
+          </div>
+          <h1>خرید و فروش <span class="gold">طلا</span><br>با اطمینان و اصالت</h1>
+          <p>سکه، شمش و مصنوعات طلای ۱۸ عیار با کارشناسی تخصصی، عیار تضمینی و قیمت‌گذاری شفاف بر اساس نرخ روز.</p>
+          <div class="hero-cta">
+            <a href="#products" class="btn-primary">
+              مشاهده محصولات
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <button class="btn-ghost" onclick="openChat()">
+              ✨ استعلام عیار و قیمت
+            </button>
+          </div>
+        </div>
+        <div class="hero-visual">🥇</div>
+      </div>
+
+      <div class="hero-side">
+        <div class="side-card dark">
+          <div>
+            <h3>سرمایه‌گذاری طلا</h3>
+            <p>خرید سکه و شمش با قیمت روز</p>
+          </div>
+          <div class="arrow">مشاهده
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+          <div class="emoji">💰</div>
+        </div>
+        <div class="side-card light">
+          <div>
+            <h3>کارشناسی طلا</h3>
+            <p>عیار و اصالت، تضمینی</p>
+          </div>
+          <div class="arrow">بیشتر
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+          <div class="emoji">🔍</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust -->
+  <section class="container trust">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="t-icon">⚖️</div>
+        <div>
+          <div class="t-title">عیار تضمینی</div>
+          <div class="t-sub">۱۸ عیار با مهر رسمی</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="t-icon">🛡️</div>
+        <div>
+          <div class="t-title">اصالت کالا</div>
+          <div class="t-sub">کارشناسی تخصصی</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="t-icon">📈</div>
+        <div>
+          <div class="t-title">قیمت لحظه‌ای</div>
+          <div class="t-sub">بر اساس نرخ روز</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="t-icon">📜</div>
+        <div>
+          <div class="t-title">فاکتور رسمی</div>
+          <div class="t-sub">برای هر خرید</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="section container">
+    <div class="sec-head">
+      <div>
+        <div class="sec-title">دسته‌بندی طلا</div>
+        <div class="sec-sub">همه محصولات طلا در یک‌جا</div>
+      </div>
+      <a href="#" class="sec-link">همه دسته‌ها
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card"><div class="c-emoji">🥇</div><div class="c-name">سکه</div></div>
+      <div class="cat-card"><div class="c-emoji">🧱</div><div class="c-name">شمش</div></div>
+      <div class="cat-card"><div class="c-emoji">📿</div><div class="c-name">گردنبند</div></div>
+      <div class="cat-card"><div class="c-emoji">💫</div><div class="c-name">دستبند</div></div>
+      <div class="cat-card"><div class="c-emoji">💍</div><div class="c-name">انگشتر</div></div>
+      <div class="cat-card"><div class="c-emoji">✨</div><div class="c-name">گوشواره</div></div>
+      <div class="cat-card"><div class="c-emoji">👑</div><div class="c-name">ست و نیم‌ست</div></div>
+    </div>
+  </section>
+
+  <!-- Deals -->
+  <section class="section container" style="padding-top:0">
+    <div class="deals-banner">
+      <div>
+        <h2>✦ پیشنهاد ویژه طلا</h2>
+        <p>تخفیف روی اجرت ساخت — تایمر محدود</p>
+      </div>
+      <div class="countdown" id="countdown">
+        <div class="cd"><span id="cdH">11</span><small>ساعت</small></div>
+        <span class="sep">:</span>
+        <div class="cd"><span id="cdM">45</span><small>دقیقه</small></div>
+        <span class="sep">:</span>
+        <div class="cd"><span id="cdS">30</span><small>ثانیه</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="section container" id="products" style="padding-top:0">
+    <div class="sec-head">
+      <div>
+        <div class="sec-title">محصولات طلا</div>
+        <div class="sec-sub">منتخب کارشناسان بازاره</div>
+      </div>
+      <a href="#" class="sec-link">مشاهده همه
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+    <div class="prod-grid" id="prodGrid"></div>
+  </section>
+
+  <!-- AI Banner -->
+  <section class="container">
+    <div class="ai-banner">
+      <div class="ai-content">
+        <div class="ai-badge">✨ دستیار تخصصی طلا</div>
+        <h2>مشاوره <span class="gold">تخصصی طلا</span><br>با هوش مصنوعی</h2>
+        <p>عیار، وزن، اجرت و قیمت روز را بپرس؛ دستیار بازاره بهترین گزینه‌های طلا را با توجه به بودجه‌ات پیشنهاد می‌دهد.</p>
+        <button class="ai-cta" onclick="openChat()">
+          گفتگو با مشاور طلا
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+      <div class="ai-visual">
+        <div class="ai-bubble user">یه سکه سرمایه‌گذاری زیر ۵۰ میلیون می‌خوام</div>
+        <div class="ai-bubble">
+          <div class="resp-tag">✦ پیشنهاد بازاره</div>
+          «سکه تمام بهار آزادی طرح جدید» با قیمت ۴۸,۲۰۰,۰۰۰ تومان بهترین گزینه است — عیار ۲۲، ضرب بانک مرکزی و مهر رسمی.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="foot-top">
+      <div class="foot-col foot-about">
+        <div class="foot-logo">
+          <div class="logo-mark" style="width:38px;height:38px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="logo-text">
+            <span class="en" style="font-size:17px">BAZAAR<span>É</span></span>
+            <span class="fa">بازاره</span>
+          </div>
+        </div>
+        <p>بازار تخصصی طلا در ایران. خرید و فروش سکه، شمش و مصنوعات طلا با عیار تضمینی، کارشناسی تخصصی و قیمت شفاف.</p>
+      </div>
+      <div class="foot-col">
+        <h4>دسترسی سریع</h4>
+        <a href="#">درباره بازاره</a>
+        <a href="#">تماس با ما</a>
+        <a href="#">قوانین خرید طلا</a>
+        <a href="#">وبلاگ طلا</a>
+      </div>
+      <div class="foot-col">
+        <h4>راهنما</h4>
+        <a href="#">سوالات متداول</a>
+        <a href="#">پیگیری سفارش</a>
+        <a href="#">شرایط مرجوعی</a>
+        <a href="#">حریم خصوصی</a>
+      </div>
+      <div class="foot-col">
+        <div class="newsletter">
+          <h4>عضویت در خبرنامه</h4>
+          <p>از نرخ روز طلا و محصولات جدید باخبر شو</p>
+          <div class="news-input">
+            <input type="email" placeholder="ایمیل شما">
+            <button onclick="toast('✓ عضویت شما ثبت شد')">عضویت</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© ۱۴۰۴ BAZAARÉ — تمامی حقوق محفوظ است</div>
+      <div class="socials">
+        <a href="#" title="اینستاگرام">📷</a>
+        <a href="#" title="تلگرام">✈️</a>
+        <a href="#" title="توییتر">🐦</a>
+        <a href="#" title="لینکدین">💼</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Drawer -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="drawer" id="cartDrawer">
+  <div class="drawer-head">
+    <h3>🛍️ سبد خرید</h3>
+    <button class="drawer-close" onclick="closeCart()">×</button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot">
+    <div class="total-row">
+      <span class="lbl">جمع کل</span>
+      <span class="val" id="cartTotal">۰ <small>تومان</small></span>
+    </div>
+    <button class="checkout-btn" onclick="toast('✓ در نسخه دمو، پرداخت شبیه‌سازی شده است')">تکمیل خرید</button>
+  </div>
+</aside>
+
+<!-- Product Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<!-- Chat FAB -->
+<div class="chat-fab" id="chatFab" onclick="toggleChat()">
+  <div class="ring"></div>
+  ✨
+</div>
+
+<!-- Chat Panel -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-avatar">✨</div>
+    <div class="info">
+      <h4>مشاور تخصصی طلا</h4>
+      <p><span class="dot"></span> آنلاین — آماده کمک</p>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">×</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-chips" id="chatChips">
+    <button class="chip" onclick="sendQuick('یه سکه سرمایه‌گذاری زیر ۵۰ میلیون')">سکه زیر ۵۰ م</button>
+    <button class="chip" onclick="sendQuick('فرق سکه طرح جدید و قدیم چیه؟')">طرح جدید یا قدیم؟</button>
+    <button class="chip" onclick="sendQuick('گردنبند طلا ۱۸ عیار معرفی کن')">گردنبند ۱۸ عیار</button>
+  </div>
+  <div class="chat-input-wrap">
+    <input type="text" id="chatInput" placeholder="سوالت درباره طلا..." onkeypress="if(event.key==='Enter')sendMsg()">
+    <button class="chat-send" onclick="sendMsg()">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="ico">✓</span>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+// ===== داده نمونه — فقط طلا =====
+const products = [
+  { id:1, emoji:'🥇', name:'سکه تمام بهار آزادی طرح جدید', brand:'بانک مرکزی', price:48_200_000, old:null, rating:4.9, count:312, badge:'پرفروش', desc:'سکه تمام بهار آزادی طرح جدید، ضرب بانک مرکزی ایران، عیار ۲۲. مناسب سرمایه‌گذاری با نقدشوندگی بالا و مهر رسمی.' },
+  { id:2, emoji:'🥇', name:'نیم سکه بهار آزادی', brand:'بانک مرکزی', price:26_500_000, old:null, rating:4.8, count:187, badge:null, desc:'نیم سکه بهار آزادی با عیار ۲۲ و ضرب رسمی بانک مرکزی. گزینه‌ای متعادل برای سرمایه‌گذاری و پس‌انداز طلا.' },
+  { id:3, emoji:'🧱', name:'شمش طلای ۱۰ گرمی', brand:'ZARIN BAR', price:48_500_000, old:51_000_000, rating:4.9, count:96, badge:'تخفیف', desc:'شمش طلای ۱۰ گرمی با عیار ۹۹۹.۹، دارای گواهی اصالت و سریال یکتا. مناسب سرمایه‌گذاری بلندمدت.' },
+  { id:4, emoji:'🧱', name:'شمش طلای ۱ گرمی', brand:'ZARIN BAR', price:4_850_000, old:null, rating:4.7, count:241, badge:null, desc:'شمش طلای ۱ گرمی با عیار ۹۹۹.۹ و بسته‌بندی ایمن. مناسب هدیه سرمایه‌ای و شروع پس‌انداز طلا.' },
+  { id:5, emoji:'📿', name:'گردنبند طلا ۱۸ عیار طرح قلب', brand:'AURUM', price:32_800_000, old:null, rating:4.8, count:74, badge:'جدید', desc:'گردنبند طلای ۱۸ عیار با طرح قلب مدرن و ظرافت بالا. اجرت ساخت منصفانه، همراه با جعبه و فاکتور رسمی.' },
+  { id:6, emoji:'💫', name:'دستبند طلا ۱۸ عیار بافت', brand:'AURUM', price:24_600_000, old:27_200_000, rating:4.7, count:58, badge:'تخفیف', desc:'دستبند طلای ۱۸ عیار با بافت ظریف و قفل ایمن. طراحی روز، مناسب استفاده روزمره و رسمی.' },
+  { id:7, emoji:'💍', name:'انگشتر طلا ۱۸ عیار نگین‌دار', brand:'AURUM', price:18_900_000, old:null, rating:4.8, count:91, badge:null, desc:'انگشتر طلای ۱۸ عیار با نگین طبیعی و طراحی کلاسیک. اجرت ساخت شفاف و وزن دقیق اعلام‌شده.' },
+  { id:8, emoji:'✨', name:'گوشواره طلا ۱۸ عیار آویز', brand:'AURUM', price:14_700_000, old:16_500_000, rating:4.6, count:63, badge:'تخفیف', desc:'گوشواره طلای ۱۸ عیار با طراحی آویز ظریف و سبک. مناسب استفاده روزمره با ضمانت اصالت بازاره.' },
+];
+
+// ===== State =====
+let cart = JSON.parse(localStorage.getItem('bazaare_gold_cart') || '[]');
+let favorites = JSON.parse(localStorage.getItem('bazaare_gold_favs') || '[]');
+
+const fmt = n => n.toLocaleString('fa-IR');
+
+function saveState(){
+  localStorage.setItem('bazaare_gold_cart', JSON.stringify(cart));
+  localStorage.setItem('bazaare_gold_favs', JSON.stringify(favorites));
+}
+
+// ===== Render Products =====
+function renderProducts(list = products){
+  const grid = document.getElementById('prodGrid');
+  grid.innerHTML = list.map(p => `
+    <div class="prod-card" onclick="openProduct(${p.id})">
+      <div class="prod-img">
+        ${p.badge ? `<div class="prod-badge ${p.badge==='جدید'?'new':''}">${p.badge}</div>` : ''}
+        <button class="fav-btn ${favorites.includes(p.id)?'active':''}" onclick="event.stopPropagation();toggleFav(${p.id},this)">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+        ${p.emoji}
+      </div>
+      <div class="prod-info">
+        <div class="prod-brand">${p.brand}</div>
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-rating">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>${p.rating}</span>
+          <span class="count">(${fmt(p.count)})</span>
+        </div>
+        <div class="prod-price-row">
+          <span class="prod-price">${fmt(p.price)} <small>تومان</small></span>
+          ${p.old ? `<span class="prod-old">${fmt(p.old)}</span>` : ''}
+        </div>
+        <button class="add-btn" onclick="event.stopPropagation();addToCart(${p.id},1)">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          افزودن به سبد
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== Cart =====
+function addToCart(id, qty=1){
+  const item = cart.find(c => c.id === id);
+  if(item) item.qty += qty;
+  else cart.push({ id, qty });
+  saveState();
+  updateBadges();
+  const p = products.find(x => x.id === id);
+  toast(`✓ ${p.name} به سبد اضافه شد`);
+}
+function removeFromCart(id){
+  cart = cart.filter(c => c.id !== id);
+  saveState();
+  updateBadges();
+  renderCart();
+}
+function updateQty(id, delta){
+  const item = cart.find(c => c.id === id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty < 1) return removeFromCart(id);
+  saveState();
+  updateBadges();
+  renderCart();
+}
+function cartTotal(){
+  return cart.reduce((sum, c) => {
+    const p = products.find(x => x.id === c.id);
+    return sum + (p ? p.price * c.qty : 0);
+  }, 0);
+}
+function renderCart(){
+  const body = document.getElementById('cartBody');
+  if(cart.length === 0){
+    body.innerHTML = `
+      <div class="empty-cart">
+        <div class="ico">🛍️</div>
+        <h4>سبد خرید خالی است</h4>
+        <p>محصولات طلا را به سبد اضافه کن</p>
+      </div>`;
+  } else {
+    body.innerHTML = cart.map(c => {
+      const p = products.find(x => x.id === c.id);
+      if(!p) return '';
+      return `
+        <div class="cart-item">
+          <div class="cart-thumb">${p.emoji}</div>
+          <div class="cart-meta">
+            <div class="cname">${p.name}</div>
+            <div class="cprice">${fmt(p.price * c.qty)} تومان</div>
+            <div class="qty-ctrl">
+              <button onclick="updateQty(${c.id},-1)">−</button>
+              <span>${fmt(c.qty)}</span>
+              <button onclick="updateQty(${c.id},1)">+</button>
+            </div>
+          </div>
+          <button class="cart-remove" onclick="removeFromCart(${c.id})">×</button>
+        </div>`;
+    }).join('');
+  }
+  document.getElementById('cartTotal').innerHTML = `${fmt(cartTotal())} <small>تومان</small>`;
+}
+
+function updateBadges(){
+  const cartCount = cart.reduce((s,c)=>s+c.qty,0);
+  const favBadge = document.getElementById('favBadge');
+  const cartBadge = document.getElementById('cartBadge');
+  favBadge.textContent = fmt(favorites.length);
+  cartBadge.textContent = fmt(cartCount);
+  favBadge.classList.toggle('show', favorites.length > 0);
+  cartBadge.classList.toggle('show', cartCount > 0);
+}
+
+function toggleFav(id, btn){
+  const i = favorites.indexOf(id);
+  if(i > -1){
+    favorites.splice(i,1);
+    btn.classList.remove('active');
+    toast('از علاقه‌مندی‌ها حذف شد');
+  } else {
+    favorites.push(id);
+    btn.classList.add('active');
+    toast('✓ به علاقه‌مندی‌ها اضافه شد');
+  }
+  saveState();
+  updateBadges();
+}
+
+// ===== Cart Drawer =====
+function openCart(){
+  renderCart();
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart(){
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('cartBtn').onclick = openCart;
+document.getElementById('favBtn').onclick = () => toast('❤️ ' + favorites.length + ' محصول در علاقه‌مندی‌ها');
+document.getElementById('drawerOverlay').onclick = closeCart;
+
+// ===== Product Modal =====
+function openProduct(id){
+  const p = products.find(x => x.id === id);
+  if(!p) return;
+  const discount = p.old ? Math.round((1 - p.price/p.old) * 100) : 0;
+  document.getElementById('modalContent').innerHTML = `
+    <button class="modal-close" onclick="closeProduct()">×</button>
+    <div class="modal-img">
+      ${p.badge ? `<div class="tag">${p.badge}</div>` : ''}
+      ${p.emoji}
+    </div>
+    <div class="modal-body">
+      <div class="m-brand">${p.brand}</div>
+      <h2>${p.name}</h2>
+      <div class="modal-rating">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>${p.rating}</span>
+        <span style="color:var(--muted);opacity:.7">(${fmt(p.count)} نظر)</span>
+      </div>
+      <p class="modal-desc">${p.desc}</p>
+      <div class="modal-price-box">
+        <div class="modal-price">
+          ${fmt(p.price)} <small>تومان</small>
+          ${p.old ? `<span class="old">${fmt(p.old)}</span>` : ''}
+        </div>
+        ${discount ? `<div style="font-size:12px;color:#c0392b;font-weight:700;margin-top:4px">٪${fmt(discount)} تخفیف</div>` : ''}
+        <div class="modal-stock"><span class="dot"></span> موجود — آماده ارسال با بیمه</div>
+      </div>
+      <div class="modal-actions">
+        <button class="m-btn-primary" onclick="addToCart(${p.id},1);closeProduct();openCart()">افزودن به سبد خرید</button>
+        <button class="m-btn-ghost" onclick="toggleFav(${p.id},this.querySelector('.fav-ico'))" title="علاقه‌مندی">
+          <svg class="fav-ico" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;fill:${favorites.includes(p.id)?'var(--gold-500)':'none'}"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+      </div>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeProduct(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modalOverlay').onclick = e => {
+  if(e.target.id === 'modalOverlay') closeProduct();
+};
+
+// ===== Search =====
+const searchInput = document.getElementById('searchInput');
+const suggestBox = document.getElementById('suggestBox');
+
+searchInput.addEventListener('input', e => {
+  const q = e.target.value.trim();
+  if(!q){ suggestBox.classList.remove('open'); renderProducts(); return; }
+  const matches = products.filter(p =>
+    p.name.includes(q) || p.brand.toLowerCase().includes(q.toLowerCase())
+  ).slice(0, 5);
+  if(matches.length === 0){ suggestBox.classList.remove('open'); return; }
+  suggestBox.innerHTML = matches.map(p => `
+    <div class="suggest-item" onclick="openProduct(${p.id});suggestBox.classList.remove('open')">
+      <span class="emoji">${p.emoji}</span>
+      <span>${p.name}</span>
+    </div>
+  `).join('');
+  suggestBox.classList.add('open');
+});
+searchInput.addEventListener('keydown', e => {
+  if(e.key === 'Enter'){
+    const q = e.target.value.trim();
+    if(!q){ renderProducts(); return; }
+    const filtered = products.filter(p =>
+      p.name.includes(q) || p.brand.toLowerCase().includes(q.toLowerCase())
+    );
+    renderProducts(filtered);
+    suggestBox.classList.remove('open');
+  }
+});
+document.addEventListener('click', e => {
+  if(!e.target.closest('.search')) suggestBox.classList.remove('open');
+});
+
+// ===== Countdown =====
+let cdTotal = 11*3600 + 45*60 + 30;
+setInterval(() => {
+  if(cdTotal <= 0) cdTotal = 24*3600;
+  cdTotal--;
+  const h = Math.floor(cdTotal/3600);
+  const m = Math.floor((cdTotal%3600)/60);
+  const s = cdTotal%60;
+  document.getElementById('cdH').textContent = String(h).padStart(2,'0');
+  document.getElementById('cdM').textContent = String(m).padStart(2,'0');
+  document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+}, 1000);
+
+// ===== Toast =====
+let toastTimer;
+function toast(msg){
+  const el = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+}
+
+// ===== Chat =====
+let chatOpen = false;
+function toggleChat(){ chatOpen ? closeChat() : openChat(); }
+function openChat(){
+  chatOpen = true;
+  document.getElementById('chatPanel').classList.add('open');
+  document.getElementById('chatFab').style.display = 'none';
+  if(document.getElementById('chatBody').children.length === 0){
+    addMsg('bot', 'سلام 👋 من مشاور تخصصی طلا در بازاره‌ام. درباره عیار، وزن، اجرت، سکه و شمش بپرس تا راهنمایی‌ات کنم.');
+  }
+}
+function closeChat(){
+  chatOpen = false;
+  document.getElementById('chatPanel').classList.remove('open');
+  document.getElementById('chatFab').style.display = 'grid';
+}
+function addMsg(who, text){
+  const body = document.getElementById('chatBody');
+  const div = document.createElement('div');
+  div.className = 'msg ' + who;
+  div.textContent = text;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+function sendQuick(text){
+  document.getElementById('chatInput').value = text;
+  sendMsg();
+}
+function sendMsg(){
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  addMsg('user', text);
+  input.value = '';
+  const typing = document.createElement('div');
+  typing.className = 'msg bot typing';
+  typing.innerHTML = '<span></span><span></span><span></span>';
+  document.getElementById('chatBody').appendChild(typing);
+  document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+  setTimeout(() => {
+    typing.remove();
+    addMsg('bot', generateReply(text));
+  }, 900 + Math.random()*600);
+}
+function generateReply(q){
+  const lower = q.toLowerCase();
+  if(lower.includes('سکه')){
+    return 'برای سرمایه‌گذاری، «سکه تمام بهار آزادی طرح جدید» با قیمت ۴۸,۲۰۰,۰۰۰ تومان پرفروش‌ترین گزینه است. اگر بودجه محدودتری داری، نیم سکه (۲۶,۵۰۰,۰۰۰) یا ربع سکه گزینه‌های متعادل‌تری هستند.';
+  }
+  if(lower.includes('شمش')){
+    return 'شمش طلا دو گزینه اصلی دارد: شمش ۱۰ گرمی با قیمت ۴۸,۵۰۰,۰۰۰ تومان (مناسب سرمایه‌گذاری بلندمدت) و شمش ۱ گرمی با قیمت ۴,۸۵۰,۰۰۰ تومان (مناسب شروع پس‌انداز). هر دو عیار ۹۹۹.۹ و دارای گواهی اصالت هستند.';
+  }
+  if(lower.includes('عیار') || lower.includes('۱۸')){
+    return 'طلا در ایران معمولاً ۱۸ عیار (۷۵٪ خلوص) یا ۲۴ عیار (۹۹.۹۹٪) است. سکه‌های بهار آزادی عیار ۲۲ دارند. تمام محصولات بازاره با مهر و کارشناسی رسمی عرضه می‌شوند.';
+  }
+  if(lower.includes('طرح جدید') || lower.includes('طرح قدیم')){
+    return 'سکه طرح جدید (از سال ۱۳۸۶ به بعد) با تکنولوژی پیشرفته‌تر ضرب شده و در بازار نقدشوندگی بالاتری دارد. طرح قدیم کمیاب‌تر و برای کلکسیونرها ارزشمند است.';
+  }
+  if(lower.includes('اجرت') || lower.includes('قیمت')){
+    return 'قیمت نهایی طلا = ارزش ذاتی (وزن × نرخ روز) + اجرت ساخت + سود فروشنده + مالیات بر ارزش افزوده. در بازاره تمام اجزا شفاف اعلام می‌شود و می‌توانی قبل از خرید ببینی.';
+  }
+  if(lower.includes('گردنبند') || lower.includes('دستبند') || lower.includes('انگشتر') || lower.includes('گوشواره')){
+    return 'مصنوعات طلای ۱۸ عیار بازاره با اجرت ساخت شفاف و فاکتور رسمی عرضه می‌شوند. برای انتخاب دقیق‌تر، بودجه‌ات را بگو تا بهترین گزینه را پیشنهاد کنم.';
+  }
+  if(lower.includes('مرجوع') || lower.includes('بازگشت')){
+    return 'طبق قوانین بازاره، محصولات طلا تا ۷ روز پس از تحویل با شرط سالم بودن پلمپ و مهر، قابل مرجوعی هستند.';
+  }
+  return 'سوالت درباره طلاست — عیار، وزن، اجرت، سکه، شمش یا مصنوعات. بودجه و نیازت را بگو تا بهترین گزینه را از میان محصولات موجود پیشنهاد کنم.';
+}
+
+// ===== Init =====
+renderProducts();
+updateBadges();
+renderCart();
+</script>
+</body>
+</html>
